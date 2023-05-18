@@ -1,0 +1,44 @@
+server:
+  port: 8080
+spring:
+  r2dbc:
+    username: "postgres"
+    password: "postgres"
+    url: "r2dbc:postgresql://localhost:5432/Inventory"
+    properties:
+      #      poner REQUIRE para BD REMOTA y local si hay error de SSL poner DISABLE
+      sslMode: DISABLE
+      pool:
+        enabled: true
+        initial-size: 22
+        max-size: 30
+        max-idle-time: 5m
+
+  application:
+    name: "Inventory"
+  devtools:
+    add-properties: false
+  profiles:
+    include: null
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/Inventory"
+    username: "postgres"
+    password: "postgres"
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,prometheus"
+  endpoint:
+    health:
+      probes:
+        enabled: true
+logging:
+  level:
+    io.r2dbc.postgresql.QUERY: DEBUG # for queries
+    io.r2dbc.postgresql.PARAM: DEBUG # for parametes
+    org.springframework.r2dbc: DEBUG
