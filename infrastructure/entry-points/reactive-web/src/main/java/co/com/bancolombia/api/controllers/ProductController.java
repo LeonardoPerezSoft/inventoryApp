@@ -2,15 +2,7 @@ package co.com.bancolombia.api.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import co.com.bancolombia.model.product.Product;
@@ -23,6 +15,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/api/products")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200/")
 public class ProductController {
     private final ProductUseCase productUseCase;
 
@@ -32,6 +25,7 @@ public class ProductController {
                 .onErrorResume(e -> Mono.error(new CustomException(e.getMessage())))
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
+
 
     @GetMapping
     public Flux<Product> findAllProduct() {
@@ -48,14 +42,14 @@ public class ProductController {
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.BAD_REQUEST)));
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public Mono<Product> updateProduct(@RequestBody Product product, @PathVariable("id") Integer id) {
         return productUseCase.updateProduct(product, id)
                 .onErrorResume(e -> Mono.error(new CustomException(e.getMessage())))
                 .switchIfEmpty(Mono.error(new ResponseStatusException(HttpStatus.NOT_FOUND)));
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public Mono<Void> deleteProduct(@PathVariable("id") Integer id) {
         return productUseCase.findByIdProduct(id)
                 .onErrorResume(e -> Mono.error(new CustomException(e.getMessage())))

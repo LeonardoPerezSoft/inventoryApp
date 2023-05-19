@@ -52,32 +52,34 @@ public class BuyAdapter implements RepositoryCrud<BuyProduct, Integer> {
     public Mono<BuyProduct> findById(Integer id)  {
         return buyRepository.findById(id)
                 .flatMap(buy -> {
-                    List<ProductQuantity> buys = new ArrayList<>();
+                    Mono<List<ProductQuantity>> productBuyMono = detailBuyRepository.findByBuy(buy.getId())
+                                    .map(detailBuy -> new ProductQuantity(detailBuy.getProduct(), detailBuy.getQuantity()))
+                                            .collectList();
 
-                    detailBuyRepository.findByBuy(buy.getId())
-                            .flatMap(detailBuy -> {
-                                ProductQuantity productQuantity = new ProductQuantity(detailBuy.getProduct(), detailBuy.getQuantity());
-                                buys.add(productQuantity);
-                                return Mono.just(productQuantity);
-                            });
-                    BuyProduct buyProduct = new BuyProduct(buy.getId(), buy.getDni(), buy.getDate(), buy.getIdType(),
-                            buy.getClientName(), buys);
+                     return productBuyMono.map( buys -> {
+                         BuyProduct buyProduct = new BuyProduct(buy.getId(), buy.getDni(), buy.getDate(), buy.getIdType(),
+                                 buy.getClientName(), buys);
 
-                    return Mono.just(buyProduct);
+                          return buyProduct;
+                     });
                 });
     }
 
     @Override
     public Flux<BuyProduct> findAll() {
         return buyRepository.findAll()
-                .map(buyEntity -> BuyProduct.builder()
-                        .id(buyEntity.getId())
-                        .dni(buyEntity.getDni())
-                        .idType(buyEntity.getIdType())
-                        .date(buyEntity.getDate())
-                        .clientName(buyEntity.getClientName())
-                        //.products(ProductQuantity.builder().quantity(buyEntity.))
-                            .build());
+                .flatMap(buy -> {
+                    Mono<List<ProductQuantity>> productBuyMono = detailBuyRepository.findByBuy(buy.getId())
+                            .map(detailBuy -> new ProductQuantity(detailBuy.getProduct(), detailBuy.getQuantity()))
+                            .collectList();
+
+                    return productBuyMono.map( buys -> {
+                        BuyProduct buyProduct = new BuyProduct(buy.getId(), buy.getDni(), buy.getDate(), buy.getIdType(),
+                                buy.getClientName(), buys);
+
+                        return buyProduct;
+                    });
+                });
     }
 
     @Override

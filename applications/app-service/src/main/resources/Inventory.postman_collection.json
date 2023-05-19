@@ -57,7 +57,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/products/4",
+							"raw": "http://localhost:8080/api/products/12",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -66,7 +66,7 @@
 							"path": [
 								"api",
 								"products",
-								"4"
+								"12"
 							]
 						}
 					},
@@ -87,7 +87,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/products/update/5",
+							"raw": "http://localhost:8080/api/products/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -96,7 +96,6 @@
 							"path": [
 								"api",
 								"products",
-								"update",
 								"5"
 							]
 						}
@@ -110,7 +109,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Monitor\",\r\n    \"inInventory\": 100,\r\n    \"enabled\": true,\r\n    \"min\": 10,\r\n    \"max\": 300\r\n}",
+							"raw": "{\r\n    \"name\": \"Laptop\",\r\n    \"inInventory\": 50,\r\n    \"enabled\": true,\r\n    \"min\": 10,\r\n    \"max\": 80\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -138,7 +137,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/products/delete/6",
+							"raw": "http://localhost:8080/api/products/10",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -147,8 +146,7 @@
 							"path": [
 								"api",
 								"products",
-								"delete",
-								"6"
+								"10"
 							]
 						}
 					},
@@ -185,7 +183,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/api/buys/1",
+							"raw": "http://localhost:8080/api/buys/6",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -194,7 +192,7 @@
 							"path": [
 								"api",
 								"buys",
-								"1"
+								"6"
 							]
 						}
 					},
@@ -207,7 +205,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"idType\": \"CC\",\r\n    \"dni\": \"1020440550\",\r\n    \"clientName\": \"Jaunita\",\r\n    \"products\":[{\"idProduct\": \"3\", \"quantity\": 50}]\r\n    \r\n}",
+							"raw": "{\r\n    \"idType\": \"CC\",\r\n    \"dni\": \"1020440550\",\r\n    \"clientName\": \"Juanito\",\r\n    \"products\":[{\"idProduct\": \"4\", \"quantity\": 10}]\r\n    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

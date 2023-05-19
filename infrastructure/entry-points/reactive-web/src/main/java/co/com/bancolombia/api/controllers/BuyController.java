@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/api/buys")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200/")
 public class BuyController {
     private final BuyUseCase buyUseCase;
 

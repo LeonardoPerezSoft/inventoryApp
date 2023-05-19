@@ -79,6 +79,7 @@ CREATE TABLE public.detailbuy (
 	id serial4 NOT NULL,
 	product int4 NOT NULL,
 	buy int4 NOT NULL,
+	quantity int4 NOT NULL,
 	CONSTRAINT detailbuy_pkey PRIMARY KEY (id)
 );
 
